@@ -7,7 +7,7 @@ makeCacheMatrix <- function(x = matrix()) {
     m <<- NULL
   }
   get <- function() x
-  setsolve <- function(solve) m <<- solve
+  setsolve <- function(solve) m <<- solve   ## the solve is the name for inversion function used in R
   getsolve <- function() m
   list(set = set, get = get,
        setsolve = setsolve,
@@ -18,7 +18,7 @@ makeCacheMatrix <- function(x = matrix()) {
 ## Return a matrix that is the inverse of 'x'
 
 cachesolve <- function(x, ...) {
-  m <- x$getsolve()
+  m <- x$getsolve()                   ##the solve is the inverse code used in R
   if(!is.null(m)) {
     message("getting cached data")
     return(m)
@@ -29,4 +29,34 @@ cachesolve <- function(x, ...) {
   m
 }
 
+## an example showing that the two functions work
+
+cachesolve(makeCacheMatrix(x))
+## [,1] [,2]
+## [1,]    2   -5
+## [2,]   -1    3
+## > m
+## [1] 256
+## > solve(y)
+## [,1] [,2]
+## [1,]    1    0
+## [2,]    0    1
+## > solve(x)
+## [,1] [,2]
+## [1,]    2   -5
+## [2,]   -1    3
+## > x
+## [,1] [,2]
+## [1,]    3    5
+## [2,]    1    2
+## > test <- matrix(c(2, -1, -5, 3), nrow = 2)
+## > x %*% test
+## [,1] [,2]
+## [1,]    1    0
+## [2,]    0    1
+## > test %>% x
+## > test %*% x
+## [,1] [,2]
+## [1,]    1    0
+## [2,]    0    1
 
